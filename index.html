@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slider</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            background-color: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slider {
+            width: 500px;
+            height: 400px;
+            white-space: nowrap;
+            overflow: hidden;
+            position: relative;
+        }
+
+        span {
+            position: absolute;
+            top: 40%;
+            cursor: pointer;
+            transition: 0.4s;
+        }
+
+        .slider #right>img {
+            width: 10%;
+            height: 10%;
+
+        }
+
+        .slider #left>img {
+            width: 10%;
+            height: 10%;
+
+        }
+
+        .slider #right {
+            transform: translateX(450px);
+        }
+
+        .bus {
+            height: 100%;
+            display: flex;
+            transition: 1s linear;
+        }
+
+        .slider img {
+            width: 500px;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        #bulet {
+            position: absolute;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.835);
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            bottom: 0;
+            left: 0;
+            z-index: 999;
+
+            >li {
+                list-style-type: none;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                margin: 0 2px;
+                cursor: pointer;
+                background-color: rgb(22, 107, 182);
+                border: 2px solid white;
+
+            }
+        }
+
+        #bulet>li:first-child {
+            background-color: #000000;
+        }
+    </style>
+</head>
+
+<body onload="_check">
+    <div class="slider">
+        <ul id="bulet">
+
+        </ul>
+        <div class="bus">
+            <img src="imge/1.jpg" alt="">
+            <img src="imge/2.jpg" alt="">
+            <img src="imge/3.jpg" alt="">
+            <img src="imge/1.jpg" alt="">
+            <img src="imge/2.jpg" alt="">
+        </div>
+        <span id="left"><img src="imge/l.png" alt=""></span>
+        <span id="right"><img src="imge/r.png" alt=""></span>
+    </div>
+</body>
+<script>
+    let turn = 0
+    let left = 0
+    let imgs = document.querySelectorAll('.bus img')
+    imgs.forEach(() => {
+        let li = document.createElement('li')
+        bulet.appendChild(li)
+    })
+
+    let _bulet = document.querySelectorAll('#bulet > li')
+    console.log(_bulet);
+
+    _bulet.forEach((val, index) => {
+        val.addEventListener('click', () => {
+
+
+            resetbulet()
+            val.style.background = 'black'
+            console.log(index);
+            left = -(index * 500)
+            document.querySelector('.bus').style.transform = 'translateX(' + left + 'px)'
+            _check()
+            turn = index
+        })
+    })
+
+
+    _check()
+    document.getElementById('right').addEventListener('click', () => {
+        left = left - 500
+        document.querySelector('.bus').style.transform = 'translateX(' + left + 'px)'
+        _check()
+        turn++
+        resetbulet()
+        _bulet[turn].style.background = 'black'
+    })
+    document.getElementById('left').addEventListener('click', () => {
+        left = left + 500
+        document.querySelector('.bus').style.transform = 'translateX(' + left + 'px)'
+        _check()
+        turn--
+        resetbulet()
+        _bulet[turn].style.background = 'black'
+
+    })
+
+
+    function _check() {
+        if (left == 0) {
+            document.getElementById('left').style.display = 'none'
+        } else {
+            document.getElementById('left').style.display = 'flex'
+
+        }
+        if (left <= ((imgs.length - 1) * (-500))) {
+            document.getElementById('right').style.display = 'none'
+
+        } else {
+            document.getElementById('right').style.display = 'flex'
+        }
+    }
+    function resetbulet() {
+        _bulet.forEach((item) => {
+            item.style.background = 'rgb(22, 107, 182)'
+        })
+    }
+</script>
+
+</html>
